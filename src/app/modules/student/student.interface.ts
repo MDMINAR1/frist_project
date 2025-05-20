@@ -1,4 +1,6 @@
-export type Guardian = {
+import { Model } from "mongoose";
+
+export type TGuardian = {
   fatherName: string;
   fatherOccupation: string;
   fathercontactNo: string;
@@ -7,24 +9,24 @@ export type Guardian = {
   mothercontactN: string;
 };
 
-export type LocalGuardian = {
+export type TLocalGuardian = {
   Name: string;
   Occupation: string;
   contactNo: string;
   Address: string;
 };
 
-export type UserName = {
+export type TUserName = {
   firstName: string;
   middleName?: string;
   lastName: string;
 };
 
 // 1. Create an interface representing a document in MongoDB.
-export type Student = {
+export type TStudent = {
   id: string;
-  name: UserName;
-  gender: "male" | "female";
+  name: TUserName;
+  gender: "male" | "female" | "other";
   dateOfBirth?: string;
   email: string;
   contactNo: string;
@@ -32,8 +34,17 @@ export type Student = {
   bloogGroup?: "A+" | "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
   presetAddress: string;
   pemanentAddress: string;
-  guardian: Guardian;
-  localGuardian: LocalGuardian;
+  guardian: TGuardian;
+  localGuardian: TLocalGuardian;
   profileImage?: string;
   isActive: "active" | "blocked";
 };
+
+export interface StudenetModel extends Model<TStudent> {
+  isUserExits(id: string): Promise<TStudent | null>;
+}
+
+// export type StudentMethods = {
+//   iUserExits(id: string): Promise<TStudent | null>;
+// };
+// export type StudenetModel = Model<TStudent, {}, StudentMethods>;
